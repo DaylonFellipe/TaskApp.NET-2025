@@ -1,4 +1,5 @@
-﻿using Daylon.TaskApp.Communication.Requests;
+﻿using Daylon.TaskApp.Application.Services.AutoMapper;
+using Daylon.TaskApp.Communication.Requests;
 using Daylon.TaskApp.Communication.Responses;
 using System.Net.Http.Headers;
 
@@ -12,7 +13,12 @@ namespace Daylon.TaskApp.Application.UseCases.Task.Register
             Validate(request);
 
             //  Map
+            var autoMapper = new AutoMapper.MapperConfiguration(options =>
+            {
+                options.AddProfile(new AutoMapping());
+            }).CreateMapper();
 
+            var task = autoMapper.Map<Domain.Entities.Task>(request);
 
             //  Save
 
