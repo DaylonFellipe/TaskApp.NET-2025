@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Shared\Daylon.TaskApp.Communication\Daylon.TaskApp.Communication.csproj" />
     <ProjectReference Include="..\Daylon.TaskApp.Application\Daylon.TaskApp.Application.csproj" />
   </ItemGroup>

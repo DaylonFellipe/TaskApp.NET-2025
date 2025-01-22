@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Shared\Daylon.TaskApp.Communication\Daylon.TaskApp.Communication.csproj" />
     <ProjectReference Include="..\Daylon.TaskApp.Domain\Daylon.TaskApp.Domain.csproj" />
   </ItemGroup>
