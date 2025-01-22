@@ -1,4 +1,5 @@
-﻿using Daylon.TaskApp.Application.Services.AutoMapper;
+﻿using AutoMapper;
+using Daylon.TaskApp.Application.Services.AutoMapper;
 using Daylon.TaskApp.Communication.Requests;
 using Daylon.TaskApp.Communication.Responses;
 using Daylon.TaskApp.Domain.Repositories.Task;
@@ -6,31 +7,48 @@ using System.Net.Http.Headers;
 
 namespace Daylon.TaskApp.Application.UseCases.Task.Register
 {
-    public class RegisterTaskUseCase
+    public class RegisterTaskUseCase : IRegisterTaskUseCase
     {
         private readonly ITaskWriteOnlyRepository _witeOnlyRepository;
         private readonly ITaskReadOnlyRepository _readOnlyRepository;
+        private readonly IMapper _mapper;
+
+        public RegisterTaskUseCase(
+            ITaskWriteOnlyRepository witeOnlyRepository,
+            ITaskReadOnlyRepository readOnlyRepository,
+            IMapper mapper)
+        {
+            _witeOnlyRepository = witeOnlyRepository;
+            _readOnlyRepository = readOnlyRepository;
+            _mapper = mapper;
+        }
 
         public async Task<ResponseRegisteredTaskJson> Execute(RequestRegisterTaskJson request)
         {
-            //  Validate
-            Validate(request);
-
-            //  Map
-            var autoMapper = new AutoMapper.MapperConfiguration(options =>
+            try
             {
-                options.AddProfile(new AutoMapping());
-            }).CreateMapper();
+                //  Validate
+                Validate(request);
 
-            var task = autoMapper.Map<Domain.Entities.Task>(request);
+                //  Map
+                var taskEntity = _mapper.Map<Domain.Entities.Task>(request);
 
-            //  Save
-            await _witeOnlyRepository.Add(task);
+                //  Save
+                await _witeOnlyRepository.Add(taskEntity);
 
-            return new ResponseRegisteredTaskJson
+                return new ResponseRegisteredTaskJson
+                {
+                    Name = taskEntity.Name,
+                    Description = taskEntity.Description,
+                };
+            }
+            catch (Exception e)
             {
-                Name = request.Name,
-            };
+                Console.WriteLine("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||" +
+                    e.Message);
+
+                return null;
+            }
         }
 
         private void Validate(RequestRegisterTaskJson request)

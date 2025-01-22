@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Daylon.TaskApp.Communication\Daylon.TaskApp.Communication.csproj" />
     <ProjectReference Include="..\Daylon.TaskApp.Application\Daylon.TaskApp.Application.csproj" />
+    <ProjectReference Include="..\Daylon.TaskApp.Infrastructure\Daylon.TaskApp.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

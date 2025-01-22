@@ -6,6 +6,16 @@ namespace Daylon.TaskApp.Infrastructure.DataAccess
     {
         public TaskAppDbContext(DbContextOptions options) : base(options) { }
 
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<Domain.Entities.Task> Tasks { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            //modelBuilder.Entity<Domain.Entities.Task>(entity =>
+            //{
+            //    entity.HasKey(task => task.Id);
+            //});
+        }
     }
 }
