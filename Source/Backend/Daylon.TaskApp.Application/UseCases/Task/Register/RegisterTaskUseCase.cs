@@ -1,13 +1,17 @@
 ﻿using Daylon.TaskApp.Application.Services.AutoMapper;
 using Daylon.TaskApp.Communication.Requests;
 using Daylon.TaskApp.Communication.Responses;
+using Daylon.TaskApp.Domain.Repositories.Task;
 using System.Net.Http.Headers;
 
 namespace Daylon.TaskApp.Application.UseCases.Task.Register
 {
     public class RegisterTaskUseCase
     {
-        public ResponseRegisteredTaskJson Execute(RequestRegisterTaskJson request)
+        private readonly ITaskWriteOnlyRepository _witeOnlyRepository;
+        private readonly ITaskReadOnlyRepository _readOnlyRepository;
+
+        public async Task<ResponseRegisteredTaskJson> Execute(RequestRegisterTaskJson request)
         {
             //  Validate
             Validate(request);
@@ -21,7 +25,7 @@ namespace Daylon.TaskApp.Application.UseCases.Task.Register
             var task = autoMapper.Map<Domain.Entities.Task>(request);
 
             //  Save
-
+            await _witeOnlyRepository.Add(task);
 
             return new ResponseRegisteredTaskJson
             {
