@@ -3,8 +3,6 @@ using Daylon.TaskApp.Communication.Requests;
 using Daylon.TaskApp.Communication.Responses;
 using Daylon.TaskApp.Domain.Repositories.Task;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Daylon.TaskApp.API.Controllers
 {
@@ -23,10 +21,9 @@ namespace Daylon.TaskApp.API.Controllers
         }
 
         [HttpGet("By Id")]
-        [ProducesResponseType(typeof(ResponseGetTaskJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetTaskById(
-            [FromServices] ITaskReadOnlyRepository readOnlyRepository,
-            Guid guidId)
+            [FromServices] ITaskReadOnlyRepository readOnlyRepository, Guid guidId)
         {
             if (guidId == Guid.Empty) return BadRequest("Guid is required");
 
