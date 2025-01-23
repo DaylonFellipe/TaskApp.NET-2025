@@ -9,6 +9,8 @@ namespace Daylon.TaskApp.Infrastructure.DataAccess.Repositories
 
         public TaskRepository(TaskAppDbContext dbContext) => _dbContext = dbContext;
 
+        public async Task SaveChangesAsync() => await _dbContext.SaveChangesAsync();
+
         public async Task Add(Domain.Entities.Task task) => await _dbContext.AddAsync(task);
 
         public async Task<bool> ExistTaskWithId(Guid id) =>

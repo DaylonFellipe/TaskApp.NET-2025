@@ -11,11 +11,6 @@ namespace Daylon.TaskApp.Infrastructure.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            //modelBuilder.Entity<Domain.Entities.Task>(entity =>
-            //{
-            //    entity.HasKey(task => task.Id);
-            //});
         }
     }
 }

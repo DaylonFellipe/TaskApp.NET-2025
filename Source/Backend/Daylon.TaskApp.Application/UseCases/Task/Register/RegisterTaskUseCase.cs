@@ -25,30 +25,22 @@ namespace Daylon.TaskApp.Application.UseCases.Task.Register
 
         public async Task<ResponseRegisteredTaskJson> Execute(RequestRegisterTaskJson request)
         {
-            try
+            //  Validate
+            Validate(request);
+
+            //  Map
+            var taskEntity = _mapper.Map<Domain.Entities.Task>(request);
+
+            //  Save
+            await _witeOnlyRepository.Add(taskEntity);
+
+            await _witeOnlyRepository.SaveChangesAsync();
+
+            return new ResponseRegisteredTaskJson
             {
-                //  Validate
-                Validate(request);
-
-                //  Map
-                var taskEntity = _mapper.Map<Domain.Entities.Task>(request);
-
-                //  Save
-                await _witeOnlyRepository.Add(taskEntity);
-
-                return new ResponseRegisteredTaskJson
-                {
-                    Name = taskEntity.Name,
-                    Description = taskEntity.Description,
-                };
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||" +
-                    e.Message);
-
-                return null;
-            }
+                Name = taskEntity.Name,
+                Description = taskEntity.Description,
+            };
         }
 
         private void Validate(RequestRegisterTaskJson request)
