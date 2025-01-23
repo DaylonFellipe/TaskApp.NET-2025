@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Daylon.TaskApp.Domain\Daylon.TaskApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\Task\Get\" />
+  </ItemGroup>
+
 </Project>

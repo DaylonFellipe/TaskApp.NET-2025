@@ -13,7 +13,16 @@ namespace Daylon.TaskApp.Infrastructure.DataAccess.Repositories
 
         public async Task Add(Domain.Entities.Task task) => await _dbContext.AddAsync(task);
 
+        public async Task<List<Domain.Entities.Task>> GetAll() => await _dbContext.Tasks.AsNoTracking().ToListAsync();
+
         public async Task<bool> ExistTaskWithId(Guid id) =>
             await _dbContext.Tasks.AnyAsync(task => task.Id.Equals(id));
+
+        public async Task<Domain.Entities.Task> GetTaskById(Guid Id)
+        {
+            var task = await _dbContext.Tasks.AsNoTracking().FirstOrDefaultAsync(task => task.Id == Id);
+
+            return task!;
+        }
     }
 }
