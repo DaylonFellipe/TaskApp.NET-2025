@@ -3,6 +3,9 @@
     public interface ITaskWriteOnlyRepository
     {
         public System.Threading.Tasks.Task SaveChangesAsync();
-        public System.Threading.Tasks.Task Add(Entities.Task task);
+        public System.Threading.Tasks.Task AddAsync(Entities.Task task);
+        public System.Threading.Tasks.Task ActiveToInactiveAsync(Entities.Task task);
+        public System.Threading.Tasks.Task InactiveToActiveAsync(Entities.Task task);
+        public System.Threading.Tasks.Task DeleteTaskAsync(Domain.Entities.Task task);
     }
 }

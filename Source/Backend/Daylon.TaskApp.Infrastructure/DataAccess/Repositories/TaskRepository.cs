@@ -11,18 +11,37 @@ namespace Daylon.TaskApp.Infrastructure.DataAccess.Repositories
 
         public async Task SaveChangesAsync() => await _dbContext.SaveChangesAsync();
 
-        public async Task Add(Domain.Entities.Task task) => await _dbContext.AddAsync(task);
+        public async Task AddAsync(Domain.Entities.Task task) => await _dbContext.AddAsync(task);
 
-        public async Task<List<Domain.Entities.Task>> GetAll() => await _dbContext.Tasks.AsNoTracking().ToListAsync();
+        public async Task<List<Domain.Entities.Task>> GetAllAsync() => await _dbContext.Tasks.AsNoTracking().ToListAsync();
 
-        public async Task<bool> ExistTaskWithId(Guid id) =>
+        public async Task<bool> ExistTaskWithIdAsync(Guid id) =>
             await _dbContext.Tasks.AnyAsync(task => task.Id.Equals(id));
 
-        public async Task<Domain.Entities.Task> GetTaskById(Guid Id)
+        public async Task<Domain.Entities.Task> GetTaskByIdAsync(Guid Id)
         {
             var task = await _dbContext.Tasks.AsNoTracking().FirstOrDefaultAsync(task => task.Id == Id);
 
             return task!;
+        }
+
+        public async Task ActiveToInactiveAsync(Domain.Entities.Task task)
+        {
+            task.Active = false;
+            _dbContext.Update(task);
+            await _dbContext.SaveChangesAsync();
+        } 
+        public async Task InactiveToActiveAsync(Domain.Entities.Task task)
+        {
+            task.Active = true;
+            _dbContext.Update(task);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteTaskAsync(Domain.Entities.Task task)
+        {
+            _dbContext.Remove(task);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

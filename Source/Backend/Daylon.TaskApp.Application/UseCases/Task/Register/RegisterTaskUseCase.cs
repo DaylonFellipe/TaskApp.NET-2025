@@ -32,7 +32,7 @@ namespace Daylon.TaskApp.Application.UseCases.Task.Register
             var taskEntity = _mapper.Map<Domain.Entities.Task>(request);
 
             //  Save
-            await _witeOnlyRepository.Add(taskEntity);
+            await _witeOnlyRepository.AddAsync(taskEntity);
 
             await _witeOnlyRepository.SaveChangesAsync();
 
