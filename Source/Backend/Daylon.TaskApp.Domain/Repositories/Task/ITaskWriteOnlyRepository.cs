@@ -8,5 +8,6 @@
         public System.Threading.Tasks.Task InactiveToActiveAsync(Entities.Task task);
         public System.Threading.Tasks.Task DeleteTaskAsync(Domain.Entities.Task task);
         public System.Threading.Tasks.Task UpdateTaskAsync(Domain.Entities.Task task);
+        public System.Threading.Tasks.Task<Domain.Entities.Task> GetTaskByIdToDeleteAsync(Guid Id);
     }
 }

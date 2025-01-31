@@ -25,6 +25,13 @@ namespace Daylon.TaskApp.Infrastructure.DataAccess.Repositories
             return task!;
         }
 
+        public async Task<Domain.Entities.Task> GetTaskByIdToDeleteAsync(Guid Id)
+        {
+            var task = await _dbContext.Tasks.FirstOrDefaultAsync(task => task.Id == Id);
+
+            return task!;
+        }
+
         public async Task UpdateTaskAsync(Domain.Entities.Task task)
         {
             _dbContext.Update(task);
@@ -36,7 +43,7 @@ namespace Daylon.TaskApp.Infrastructure.DataAccess.Repositories
             task.Active = false;
             _dbContext.Update(task);
             await _dbContext.SaveChangesAsync();
-        } 
+        }
         public async Task InactiveToActiveAsync(Domain.Entities.Task task)
         {
             task.Active = true;

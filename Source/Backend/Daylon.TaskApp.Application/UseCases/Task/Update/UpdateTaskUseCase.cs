@@ -22,7 +22,7 @@ namespace Daylon.TaskApp.Application.UseCases.Task.Update
         }
 
 
-        public async Task<ResponseUpdateTaskJson> ValidateStrings(RequestUpdateTaskJson request)
+        public async Task<ResponseUpdateTaskJson> ValidateStringsAsync(RequestUpdateTaskJson request)
         {
             var validator = new UpdateStringsTaskValidator();
 
@@ -45,6 +45,56 @@ namespace Daylon.TaskApp.Application.UseCases.Task.Update
                 Id = request.Id,
                 Name = request.Name,
                 Description = request.Description
+            };
+        }
+
+        public async Task<ResponseUpdateTaskJson> UpdateName(Guid id, String name)
+        {
+            var validator = new UpdateNameValidator(name);
+
+            var result = await validator.ValidateAsync(name);
+
+            if (result.IsValid == false)
+            {
+                var errors = result.Errors.Select(e => e.ErrorMessage);
+                throw new Exception("Request is not valid");
+            }
+
+            var entity = await _readOnlyRepository.GetTaskByIdAsync(id);
+            entity.Name = name;
+
+            await _writeOnlyRepository.UpdateTaskAsync(entity);
+
+            return new ResponseUpdateTaskJson
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Description = entity.Description
+            };
+        }
+
+        public async Task<ResponseUpdateTaskJson> UpdateDescription(Guid id, String description)
+        {
+            var validator = new UpdateDescriptionValidator(description);
+
+            var result = await validator.ValidateAsync(description);
+
+            if (result.IsValid == false)
+            {
+                var errors = result.Errors.Select(e => e.ErrorMessage);
+                throw new Exception("Request is not valid");
+            }
+
+            var entity = await _readOnlyRepository.GetTaskByIdAsync(id);
+            entity.Description = description;
+
+            await _writeOnlyRepository.UpdateTaskAsync(entity);
+
+            return new ResponseUpdateTaskJson
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Description = entity.Description
             };
         }
     }

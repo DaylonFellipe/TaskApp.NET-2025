@@ -27,9 +27,10 @@ namespace Daylon.TaskApp.API.Controllers
         public async Task<IActionResult> GetTaskById(
             [FromServices] ITaskReadOnlyRepository readOnlyRepository, Guid guidId)
         {
-            var validateGuid = await GetValidatedTaskByIdAsync(readOnlyRepository, guidId);
-            if (validateGuid.Result is BadRequestObjectResult) return validateGuid.Result;
-            var task = validateGuid.Value;
+            var validateGuid = await GetValidateIdAsync(readOnlyRepository, guidId);
+            if (validateGuid is not OkResult) return validateGuid;
+
+            var task = await GetTaskAsync(readOnlyRepository, guidId);
 
             return Ok(task);
         }
@@ -48,6 +49,7 @@ namespace Daylon.TaskApp.API.Controllers
         }
 
         // PUT
+
         [HttpPut("Name and Description")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateTask(
@@ -56,31 +58,61 @@ namespace Daylon.TaskApp.API.Controllers
             [FromServices] ITaskReadOnlyRepository readOnlyRepository,
             [FromBody] RequestUpdateTaskJson request)
         {
-            var validateGuid = await GetValidatedTaskByIdAsync(readOnlyRepository, request.Id);
-            if (validateGuid.Result is BadRequestObjectResult || validateGuid.Result is NotFoundObjectResult) return validateGuid.Result;
-            var task = validateGuid.Value;
+            var validateGuid = await GetValidateIdAsync(readOnlyRepository, request.Id);
+            if (validateGuid is not OkResult) return validateGuid;
 
-            var validateStrings = await useCase.ValidateStrings(request);
+            var validateStrings = await useCase.ValidateStringsAsync(request);
 
             return Ok(validateStrings);
         }
 
         // PATCH
 
+        [HttpPatch("Name")]
+        [ProducesResponseType(typeof(ResponseUpdateTaskJson), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateNameTask(
+            [FromServices] IUpdateTaskUseCase useCase,
+            [FromServices] ITaskReadOnlyRepository readOnlyRepository,
+            Guid id, String name)
+        {
+            var validateGuid = await GetValidateIdAsync(readOnlyRepository, id);
+            if (validateGuid is not OkResult) return validateGuid;
+
+            var task = await useCase.UpdateName(id, name);
+
+            return Ok(task);
+        }
+
+        [HttpPatch("Description")]
+        [ProducesResponseType(typeof(ResponseUpdateTaskJson), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateDescriptionTask(
+           [FromServices] IUpdateTaskUseCase useCase,
+           [FromServices] ITaskReadOnlyRepository readOnlyRepository,
+           Guid id, String description)
+        {
+            var validateGuid = await GetValidateIdAsync(readOnlyRepository, id);
+            if (validateGuid is not OkResult) return validateGuid;
+
+            var task = await useCase.UpdateDescription(id, description);
+
+            return Ok(task);
+        }
+
         // DELETE
 
-        [HttpDelete("SoftDelete")]
+        [HttpDelete("SoftDelete or Finish")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> SoftDeleteTask(
             [FromServices] ITaskWriteOnlyRepository writeOnlyRepository,
             [FromServices] ITaskReadOnlyRepository readOnlyRepository,
             Guid guidId)
         {
-            var validateGuid = await GetValidatedTaskByIdAsync(readOnlyRepository, guidId);
-            if (validateGuid.Result is BadRequestObjectResult) return validateGuid.Result;
-            var task = validateGuid.Value;
+            var validateGuid = await GetValidateIdAsync(readOnlyRepository, guidId);
+            if (validateGuid is not OkResult) return validateGuid;
 
-            _ = writeOnlyRepository.ActiveToInactiveAsync(task!);
+            var task = await GetTaskAsync(readOnlyRepository, guidId);
+
+            _ = writeOnlyRepository.ActiveToInactiveAsync(task);
 
             return NoContent();
         }
@@ -92,18 +124,19 @@ namespace Daylon.TaskApp.API.Controllers
             [FromServices] ITaskReadOnlyRepository readOnlyRepository,
             Guid guidId)
         {
-            var validateGuid = await GetValidatedTaskByIdAsync(readOnlyRepository, guidId);
-            if (validateGuid.Result is BadRequestObjectResult) return validateGuid.Result;
-            var task = validateGuid.Value;
+            var validateGuid = await GetValidateIdAsync(readOnlyRepository, guidId);
+            if (validateGuid is not OkResult) return validateGuid;
 
-            _ = writeOnlyRepository.DeleteTaskAsync(task!);
+            var task = await writeOnlyRepository.GetTaskByIdToDeleteAsync(guidId);
+
+            _ = writeOnlyRepository.DeleteTaskAsync(task);
 
             return NoContent();
         }
 
         // SUPORT METHODS
 
-        private async Task<ActionResult<Domain.Entities.Task>> GetValidatedTaskByIdAsync(
+        private async Task<ActionResult> GetValidateIdAsync(
             ITaskReadOnlyRepository readOnlyRepository, Guid guidId)
         {
             if (guidId == Guid.Empty) return BadRequest("Guid is invalid");
@@ -111,6 +144,14 @@ namespace Daylon.TaskApp.API.Controllers
             var task = await readOnlyRepository.GetTaskByIdAsync(guidId);
 
             if (task == null) return NotFound("There is no task with this Id");
+
+            return Ok();
+        }
+
+        private static async Task<Domain.Entities.Task> GetTaskAsync(
+            ITaskReadOnlyRepository readOnlyRepository, Guid guidId)
+        {
+            var task = await readOnlyRepository.GetTaskByIdAsync(guidId);
 
             return task;
         }
