@@ -1,5 +1,6 @@
 ﻿using Daylon.TaskApp.Application.Services.AutoMapper;
 using Daylon.TaskApp.Application.UseCases.Task.Register;
+using Daylon.TaskApp.Application.UseCases.Task.Update;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Daylon.TaskApp.Application
@@ -15,6 +16,7 @@ namespace Daylon.TaskApp.Application
         private static void AddUseCases(IServiceCollection services)
         {
             services.AddScoped<IRegisterTaskUseCase, RegisterTaskUseCase>();
+            services.AddScoped<IUpdateTaskUseCase, UpdateTaskUseCase>();
         }
 
         private static void AddAutoMapper(IServiceCollection services)

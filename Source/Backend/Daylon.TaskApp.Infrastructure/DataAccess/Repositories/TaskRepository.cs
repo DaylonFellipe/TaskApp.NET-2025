@@ -25,6 +25,12 @@ namespace Daylon.TaskApp.Infrastructure.DataAccess.Repositories
             return task!;
         }
 
+        public async Task UpdateTaskAsync(Domain.Entities.Task task)
+        {
+            _dbContext.Update(task);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task ActiveToInactiveAsync(Domain.Entities.Task task)
         {
             task.Active = false;
