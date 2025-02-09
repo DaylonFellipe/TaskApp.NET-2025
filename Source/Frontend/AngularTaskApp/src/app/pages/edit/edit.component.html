@@ -1,0 +1,10 @@
+<div class="container mt-5">
+  <div *ngIf="taskEntity">
+    <app-form
+      (onSubmitEdit)="EditTaskButton($event)"
+      [taskData]="taskEntity"
+      [btnAction]="btnAction"
+      [descPageName]="descPageName"
+    ></app-form>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="custom-title-img" >
+  <img src="/task-logo.png"/>
+</div>
+
+<div class="container mt-5">
+  <button class="btn btn-success w-100" [routerLink]="['/register']" routerLinkActive="router-link-active">Add new Task</button>
+  <div>
+    <label class="custom-label form-label">Search:</label>
+    <input
+      type="text"
+      class="form-control search-bar-custom"
+      placeholder="What task do you want to search for?  Id or Name"
+      (input)="search($event)"
+    />
+  </div>
+
+  <table class="table table-hover table-bordered mt-5">
+    <thead class="table-dark">
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>CreatedOn</th>
+        <th>Active</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @if(taskList.length > 0) { @for (task of taskList; track $index) {
+      <tr>
+        <td>{{ task.id }}</td>
+        <td>{{ task.name | slice:0:20 }}{{ task.name.length > 20 ? '...' : '' }}</td>
+        <td>{{ task.description | slice:0:30 }}{{ task.description.length > 30 ? '...' : '' }}</td>
+        <td>{{ task.createdOn | date:'short' }}</td>
+        <td>{{ task.active == true ? "Active" : "Inactive" }}</td>
+        <td>
+          <button class="btn btn-warning mx-2" [routerLink]="['/edit', task.id]">Edit</button>
+
+          <button class="btn btn-info mx-2" [routerLink]="['/details', task.id]">Details</button>
+
+          <button class="btn btn-danger mx-2" (click)="softDelete(task.id)">Finish</button>
+        </td>
+      </tr>
+      } }
+      @else {
+        <tr class="text-center">
+          <td colspan="6">No tasks found</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

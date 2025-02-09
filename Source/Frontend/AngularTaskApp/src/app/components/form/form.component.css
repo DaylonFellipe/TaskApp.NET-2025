@@ -1,0 +1,17 @@
+h1.title-page-custom {
+  margin-bottom: 20px;
+}
+
+div.input-custom {
+  input {
+    background-color: #32363b;
+    -webkit-text-fill-color: #d3d3d3;
+
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
+}
+
+.btn-custom {
+  margin-top: 10px;
+}
