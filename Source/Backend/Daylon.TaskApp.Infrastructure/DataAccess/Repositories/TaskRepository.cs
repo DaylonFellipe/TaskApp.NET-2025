@@ -15,6 +15,9 @@ namespace Daylon.TaskApp.Infrastructure.DataAccess.Repositories
 
         public async Task<List<Domain.Entities.Task>> GetAllAsync() => await _dbContext.Tasks.AsNoTracking().ToListAsync();
 
+        public async Task<List<Domain.Entities.Task>> GetAllActiveAsync() =>
+            await _dbContext.Tasks.AsNoTracking().Where(task => task.Active).ToListAsync();
+
         public async Task<bool> ExistTaskWithIdAsync(Guid id) =>
             await _dbContext.Tasks.AnyAsync(task => task.Id.Equals(id));
 

@@ -13,7 +13,7 @@ namespace Daylon.TaskApp.API.Controllers
 
         [HttpGet("All")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllPerson([FromServices] ITaskReadOnlyRepository readOnlyRepository)
+        public async Task<IActionResult> GetAllTask([FromServices] ITaskReadOnlyRepository readOnlyRepository)
         {
             var task = await readOnlyRepository.GetAllAsync();
 
@@ -22,7 +22,18 @@ namespace Daylon.TaskApp.API.Controllers
             return Ok(task);
         }
 
-        [HttpGet("By Id")]
+        [HttpGet("AllActive")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllActivateTask([FromServices] ITaskReadOnlyRepository readOnlyRepository)
+        {
+            var task = await readOnlyRepository.GetAllActiveAsync();
+
+            if (task.Count == 0) return NotFound("No task found");
+
+            return Ok(task);
+        }
+
+        [HttpGet("ById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetTaskById(
             [FromServices] ITaskReadOnlyRepository readOnlyRepository, Guid guidId)
@@ -50,7 +61,7 @@ namespace Daylon.TaskApp.API.Controllers
 
         // PUT
 
-        [HttpPut("Name and Description")]
+        [HttpPut("NameandDescription")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateTask(
             [FromServices] IUpdateTaskUseCase useCase,
@@ -98,9 +109,26 @@ namespace Daylon.TaskApp.API.Controllers
             return Ok(task);
         }
 
+        [HttpPatch("InactiveToActive")]
+        [ProducesResponseType(typeof(ResponseUpdateTaskJson), StatusCodes.Status200OK)]
+        public async Task<IActionResult> InactiveToActive(
+            [FromServices] ITaskWriteOnlyRepository writeOnlyRepository,
+            [FromServices] ITaskReadOnlyRepository readOnlyRepository,
+            Guid guidId)
+        {
+            var validateGuid = await GetValidateIdAsync(readOnlyRepository, guidId);
+            if (validateGuid is not OkResult) return validateGuid;
+
+            var task = await GetTaskAsync(readOnlyRepository, guidId);
+
+            _ = writeOnlyRepository.InactiveToActiveAsync(task);
+
+            return Ok(task);
+        }
+
         // DELETE
 
-        [HttpDelete("SoftDelete or Finish")]
+        [HttpDelete("SoftDeleteOrFinish")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> SoftDeleteTask(
             [FromServices] ITaskWriteOnlyRepository writeOnlyRepository,

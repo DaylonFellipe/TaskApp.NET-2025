@@ -36,6 +36,12 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "MyFrontend": {
+      "commandName": "Executable",
+      "executablePath": "cmd.exe",
+      "workingDirectory": "C:\\WS\\TaskApp - Code\\TaskApp",
+      "arguments": "/c npm start"
     }
   }
 }
