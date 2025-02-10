@@ -17,6 +17,10 @@ export class TaskService {
 
   // GET
 
+  GetAllTasks(): Observable<TaskInformation[]> {
+    return this.http.get<TaskInformation[]>(this.ApiUrl + '/All');
+  }
+
   GetAllActiveTasks(): Observable<TaskInformation[]> {
     return this.http.get<TaskInformation[]>(this.ApiUrl + '/AllActive');
   }
@@ -37,9 +41,19 @@ export class TaskService {
     return this.http.put<EditTaskResponse>(this.ApiUrl + '/NameandDescription', request);
   }
 
+  // PATCH
+
+  InactiveToActive(id: string): Observable<TaskInformation> {
+    return this.http.patch<TaskInformation>(this.ApiUrl + '/InactiveToActive?guidId=' + id.toString(), null);
+  }
+
   // DELETE
 
   SoftDeleteTask(id: string) {
     return this.http.delete<TaskInformation>(this.ApiUrl + '/SoftDeleteOrFinish?guidId=' + id.toString());
+  }
+
+  HardDeleteTask(id: string) {
+    return this.http.delete<TaskInformation>(this.ApiUrl + '/HardDelete?guidId=' + id.toString());
   }
 }

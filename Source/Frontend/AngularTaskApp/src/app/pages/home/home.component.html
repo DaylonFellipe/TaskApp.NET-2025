@@ -3,7 +3,10 @@
 </div>
 
 <div class="container mt-5">
-  <button class="btn btn-success w-100" [routerLink]="['/register']" routerLinkActive="router-link-active">Add new Task</button>
+  <div class="d-flex mt-3">
+  <button class="btn btn-success w-50 mx-1" [routerLink]="['/register']" routerLinkActive="router-link-active">Add new Task</button>
+  <button class="btn btn-warning w-50 mx-1" [routerLink]="['/management']" routerLinkActive="router-link-active">Management Functions</button>
+</div>
   <div>
     <label class="custom-label form-label">Search:</label>
     <input
@@ -33,8 +36,8 @@
         <td>{{ task.name | slice:0:20 }}{{ task.name.length > 20 ? '...' : '' }}</td>
         <td>{{ task.description | slice:0:30 }}{{ task.description.length > 30 ? '...' : '' }}</td>
         <td>{{ task.createdOn | date:'short' }}</td>
-        <td>{{ task.active == true ? "Active" : "Inactive" }}</td>
-        <td>
+        <td class="active-custom">{{ task.active == true ? "🟢" : "🔴" }}</td>
+        <td class="d-flex">
           <button class="btn btn-warning mx-2" [routerLink]="['/edit', task.id]">Edit</button>
 
           <button class="btn btn-info mx-2" [routerLink]="['/details', task.id]">Details</button>

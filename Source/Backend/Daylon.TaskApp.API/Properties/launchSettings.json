@@ -39,9 +39,10 @@
     },
     "MyFrontend": {
       "commandName": "Executable",
-      "executablePath": "cmd.exe",
-      "workingDirectory": "C:\\WS\\TaskApp - Code\\TaskApp",
-      "arguments": "/c npm start"
+      "executablePath": "C:\\Windows\\System32\\cmd.exe",
+      "workingDirectory": "C:\\WS\\TaskApp\\Source\\Frontend\\AngularTaskApp",
+      "commandLineArgs": "/c npm start"
     }
   }
 }
+

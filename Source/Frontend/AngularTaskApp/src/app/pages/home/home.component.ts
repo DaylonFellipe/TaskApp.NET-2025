@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { TaskInformation } from '../../models/Task';
-import { stringify } from 'node:querystring';
 import { RouterModule } from '@angular/router';
-import { DatePipe, SlicePipe } from '@angular/common';
+import { CommonModule, DatePipe, SlicePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterModule, DatePipe, SlicePipe],
+  imports: [RouterModule, DatePipe, SlicePipe, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

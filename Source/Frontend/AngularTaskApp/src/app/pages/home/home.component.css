@@ -17,3 +17,11 @@ input.search-bar-custom{
     -webkit-text-fill-color: #afafaf;
     margin-bottom: -5px;
 }
+
+td.active-custom{
+  text-align: center;
+}
+
+button.btn-custom{
+  background-color: #ff9901;
+}

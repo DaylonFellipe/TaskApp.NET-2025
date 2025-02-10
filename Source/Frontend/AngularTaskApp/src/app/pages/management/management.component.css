@@ -1,0 +1,81 @@
+div.custom-title-img {
+    margin-top: 60px;
+    margin-bottom: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+  }
+  
+  label.custom-label {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  input.search-bar-custom{
+      background-color: #404347;
+      -webkit-text-fill-color: #afafaf;
+      margin-bottom: -5px;
+  }
+  
+  td.active-custom{
+    text-align: center;
+  }
+  
+  button.btn-custom{
+    background-color: #ff9901;
+  }
+  
+  div.div-custom-filters{
+    margin-bottom: -3%;
+  }
+
+  input.checkbox-custom-active {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #00D26A;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+    text-align: center;
+    margin: -50%;
+  }
+
+  input.checkbox-custom-active:hover {
+    background-color: #00793c;
+  }
+
+  input.checkbox-custom-active:active {
+    animation: click-animation 0.3s forwards;
+  }
+
+  input.checkbox-custom-inactive {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #F8312F;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+    text-align: center;
+    margin: -50%;
+    
+  }
+
+  input.checkbox-custom-inactive:hover {
+    background-color: #5d1110;
+  }
+
+  input.checkbox-custom-inactive:active {
+    animation: click-animation 0.3s forwards;
+  }
+
