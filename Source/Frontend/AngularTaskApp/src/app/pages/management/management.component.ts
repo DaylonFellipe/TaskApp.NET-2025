@@ -4,6 +4,8 @@ import { TaskService } from '../../services/task.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule, DatePipe, SlicePipe } from '@angular/common';
 import { CheckboxControlValueAccessor } from '@angular/forms';
+import { TaskStatusEnum } from '../../services/Enum/TaskStatusEnum';
+import { resourceUsage } from 'process';
 
 @Component({
   selector: 'app-management',
@@ -14,6 +16,7 @@ import { CheckboxControlValueAccessor } from '@angular/forms';
 export class ManagementComponent implements OnInit {
   taskList: any[] = [];
   taskAll: TaskInformation[] = [];
+  taskStatusEnum = TaskStatusEnum;
 
   constructor(private task: TaskService) { }
 
@@ -35,31 +38,28 @@ export class ManagementComponent implements OnInit {
     })
   }
 
-  filterActive(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    const value = target.checked;
+  
 
-    if (!value) {
-      this.taskList = this.taskAll;
-    } else {
-      this.taskList = this.taskAll.filter(task => {
-        return task.active.toString().includes('true');
-      });
-    }
+  // filterInactive(event: Event): void {
+  //   const target = event.target as HTMLInputElement;
+  //   const value = target.checked;
+
+  //   if (!value) {
+  //     this.taskList = this.taskAll;
+  //   } else {
+  //     this.taskList = this.taskAll.filter(task => {
+  //       return task.active.toString().includes('false');
+  //     });
+  //   }
+  // }
+
+  GetTaskbyStatus(taskStatusEnum?: TaskStatusEnum) {
+    this.task.GetAllTasks(taskStatusEnum).subscribe(Task => {
+      this.taskList = Task;
+      console.log(Task);
+    });
   }
 
-  filterInactive(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    const value = target.checked;
-
-    if (!value) {
-      this.taskList = this.taskAll;
-    } else {
-      this.taskList = this.taskAll.filter(task => {
-        return task.active.toString().includes('false');
-      });
-    }
-  }
 
   InactiveToActive(id: string) {
     this.task.InactiveToActive(id).subscribe(Task => {

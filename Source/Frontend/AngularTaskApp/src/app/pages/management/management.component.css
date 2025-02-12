@@ -30,6 +30,30 @@ div.custom-title-img {
     margin-bottom: -3%;
   }
 
+  input.checkbox-custom-all {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(to right, #00D26A 50%, #F8312F 50%);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+    text-align: center;
+    margin: -50%;
+  }
+
+  input.checkbox-custom-all:hover {
+    background-color: linear-gradient(to right, #00D26A 50%, #5d1110 50%);
+  }
+
+  input.checkbox-custom-all:active {
+    animation: click-animation 0.3s forwards;
+  }
+
   input.checkbox-custom-active {
     width: 20px;
     height: 20px;

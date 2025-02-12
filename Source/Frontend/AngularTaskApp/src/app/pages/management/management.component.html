@@ -21,14 +21,17 @@
     <label class="custom-label form-label me-2">Show only: </label>
 
     <div class="form-check form-check-inline">
-
-      <input type="checkbox" class="checkbox-custom-active" (change)="filterActive($event)" />
+      <input type="checkbox" class="checkbox-custom-all" (click)="GetTaskbyStatus()" />
     </div>
 
     <div class="form-check form-check-inline">
-
-      <input type="checkbox" class="checkbox-custom-inactive" (change)="filterInactive($event)" />
+      <input type="checkbox" class="checkbox-custom-active" (click)="GetTaskbyStatus(taskStatusEnum.active)" />
     </div>
+
+    <div class="form-check form-check-inline">
+      <input type="checkbox" class="checkbox-custom-inactive" (click)="GetTaskbyStatus(taskStatusEnum.inactive)" />
+    </div>
+
   </div>
 
     <table class="table table-hover table-bordered mt-5">

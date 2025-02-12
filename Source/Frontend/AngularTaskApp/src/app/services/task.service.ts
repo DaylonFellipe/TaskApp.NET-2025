@@ -6,6 +6,7 @@ import { TaskInformation } from '../models/Task';
 import { AddTaskRequest } from '../models/AddTaskRequest';
 import { EditTaskResponse } from '../models/EditTaskResponse';
 import { EditTaskRequest } from '../models/EditTaskRequest';
+import { TaskStatusEnum } from './Enum/TaskStatusEnum';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,12 @@ export class TaskService {
 
   // GET
 
-  GetAllTasks(): Observable<TaskInformation[]> {
-    return this.http.get<TaskInformation[]>(this.ApiUrl + '/All');
+  GetAllTasks(status?: TaskStatusEnum): Observable<TaskInformation[]> {
+    if (status == undefined)
+      return this.http.get<TaskInformation[]>(this.ApiUrl);
+    else {
+      return this.http.get<TaskInformation[]>(this.ApiUrl + "?status=" + status);
+    }
   }
 
   GetAllActiveTasks(): Observable<TaskInformation[]> {

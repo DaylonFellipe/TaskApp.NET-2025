@@ -1,4 +1,6 @@
-﻿using Daylon.TaskApp.Application.Services.AutoMapper;
+﻿using Daylon.TaskApp.Application.Interfaces;
+using Daylon.TaskApp.Application.Services.AutoMapper;
+using Daylon.TaskApp.Application.Services.Task;
 using Daylon.TaskApp.Application.UseCases.Task.Register;
 using Daylon.TaskApp.Application.UseCases.Task.Update;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +11,7 @@ namespace Daylon.TaskApp.Application
     {
         public static void AddApplication(this IServiceCollection services)
         {
+            AddInterfaces(services);
             AddAutoMapper(services);
             AddUseCases(services);
         }
@@ -27,6 +30,11 @@ namespace Daylon.TaskApp.Application
             }).CreateMapper();
 
             services.AddScoped(options => autoMapper);
+        }
+
+        private static void AddInterfaces(IServiceCollection services)
+        {
+            services.AddScoped<ITaskService, TaskService>();
         }
     }
 }

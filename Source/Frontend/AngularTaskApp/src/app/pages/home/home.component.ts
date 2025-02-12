@@ -3,6 +3,7 @@ import { TaskService } from '../../services/task.service';
 import { TaskInformation } from '../../models/Task';
 import { RouterModule } from '@angular/router';
 import { CommonModule, DatePipe, SlicePipe } from '@angular/common';
+import { TaskStatusEnum } from '../../services/Enum/TaskStatusEnum';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,7 @@ export class HomeComponent implements OnInit {
   constructor(private task: TaskService) { }
 
   ngOnInit(): void {
-    this.task.GetAllActiveTasks().subscribe((Task) => {
+    this.task.GetAllTasks(TaskStatusEnum.active).subscribe((Task) => {
       this.taskList = Task;
       this.taskAll = Task;
       console.log(Task);
