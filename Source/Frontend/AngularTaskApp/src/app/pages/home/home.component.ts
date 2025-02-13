@@ -35,11 +35,11 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  softDelete(id: string) {
-    this.task.SoftDeleteTask(id).subscribe(Task => {
+  ChangeActiveStatus(id: string) {
+    this.task.ChangeStatusActive(id).subscribe(Task => {
       console.log(Task);
       window.location.reload();
     })
-
   }
+
 }

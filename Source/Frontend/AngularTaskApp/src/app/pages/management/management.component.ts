@@ -38,21 +38,6 @@ export class ManagementComponent implements OnInit {
     })
   }
 
-  
-
-  // filterInactive(event: Event): void {
-  //   const target = event.target as HTMLInputElement;
-  //   const value = target.checked;
-
-  //   if (!value) {
-  //     this.taskList = this.taskAll;
-  //   } else {
-  //     this.taskList = this.taskAll.filter(task => {
-  //       return task.active.toString().includes('false');
-  //     });
-  //   }
-  // }
-
   GetTaskbyStatus(taskStatusEnum?: TaskStatusEnum) {
     this.task.GetAllTasks(taskStatusEnum).subscribe(Task => {
       this.taskList = Task;
@@ -60,23 +45,15 @@ export class ManagementComponent implements OnInit {
     });
   }
 
-
-  InactiveToActive(id: string) {
-    this.task.InactiveToActive(id).subscribe(Task => {
+  ChangeStatusActive(id: string) {
+    this.task.ChangeStatusActive(id).subscribe(Task => {
       console.log(Task);
       window.location.reload();
     })
   }
 
-  softDelete(id: string) {
-    this.task.SoftDeleteTask(id).subscribe(Task => {
-      console.log(Task);
-      window.location.reload();
-    })
-  }
-
-  hardDelete(id: string) {
-    this.task.HardDeleteTask(id).subscribe(Task => {
+  DeleteTask(id: string) {
+    this.task.DeleteTask(id).subscribe(Task => {
       console.log(Task);
       window.location.reload();
     })

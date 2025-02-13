@@ -4,6 +4,9 @@ namespace Daylon.TaskApp.Application.Interfaces
 {
     public interface ITaskService
     {
-        public Task<List<Domain.Entities.Task>> GetAllTasksAsync(TaskStatusEnum? status);
+        public Task<List<Domain.Entities.Task>> GetTasksAsync(TaskStatusEnum? status);
+        public Task<Domain.Entities.Task> GetTaskByIdAsync(Guid Id);
+        public Task ChangeActiveStatusAsync(Domain.Entities.Task task);
+        public Task DeleteTaskAsync(Guid id);
     }
 }

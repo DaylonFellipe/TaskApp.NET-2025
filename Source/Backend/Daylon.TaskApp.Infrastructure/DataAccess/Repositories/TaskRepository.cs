@@ -9,31 +9,11 @@ namespace Daylon.TaskApp.Infrastructure.DataAccess.Repositories
 
         public TaskRepository(TaskAppDbContext dbContext) => _dbContext = dbContext;
 
+        // DB
+
         public async Task SaveChangesAsync() => await _dbContext.SaveChangesAsync();
 
         public async Task AddAsync(Domain.Entities.Task task) => await _dbContext.AddAsync(task);
-
-        public async Task<List<Domain.Entities.Task>> GetAllAsync() => await _dbContext.Tasks.AsNoTracking().ToListAsync();
-
-        public async Task<List<Domain.Entities.Task>> GetAllActiveAsync() =>
-            await _dbContext.Tasks.AsNoTracking().Where(task => task.Active).ToListAsync();
-
-        public async Task<bool> ExistTaskWithIdAsync(Guid id) =>
-            await _dbContext.Tasks.AnyAsync(task => task.Id.Equals(id));
-
-        public async Task<Domain.Entities.Task> GetTaskByIdAsync(Guid Id)
-        {
-            var task = await _dbContext.Tasks.AsNoTracking().FirstOrDefaultAsync(task => task.Id == Id);
-
-            return task!;
-        }
-
-        public async Task<Domain.Entities.Task> GetTaskByIdToDeleteAsync(Guid Id)
-        {
-            var task = await _dbContext.Tasks.FirstOrDefaultAsync(task => task.Id == Id);
-
-            return task!;
-        }
 
         public async Task UpdateTaskAsync(Domain.Entities.Task task)
         {
@@ -41,18 +21,31 @@ namespace Daylon.TaskApp.Infrastructure.DataAccess.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task ActiveToInactiveAsync(Domain.Entities.Task task)
+        // GET
+
+        public async Task<List<Domain.Entities.Task>> GetAllAsync() => await _dbContext.Tasks.AsNoTracking().ToListAsync();
+
+        public async Task<Domain.Entities.Task> GetTaskByIdAsync(Guid Id)
         {
-            task.Active = false;
+            var task = await _dbContext.Tasks.FirstOrDefaultAsync(task => task.Id == Id);
+
+            return task ?? throw new Exception("There is no task with that id");
+        }
+
+        // PATCH
+
+        public async Task ChangeActiveStatusAsync(Domain.Entities.Task task)
+        {
+            if (task.Active == true)
+                task.Active = false;
+            else
+                task.Active = true;
+
             _dbContext.Update(task);
             await _dbContext.SaveChangesAsync();
         }
-        public async Task InactiveToActiveAsync(Domain.Entities.Task task)
-        {
-            task.Active = true;
-            _dbContext.Update(task);
-            await _dbContext.SaveChangesAsync();
-        }
+
+        // DELETE
 
         public async Task DeleteTaskAsync(Domain.Entities.Task task)
         {

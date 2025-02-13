@@ -26,14 +26,6 @@ export class TaskService {
     }
   }
 
-  GetAllActiveTasks(): Observable<TaskInformation[]> {
-    return this.http.get<TaskInformation[]>(this.ApiUrl + '/AllActive');
-  }
-
-  GetTaskById(id: string): Observable<TaskInformation> {
-    return this.http.get<TaskInformation>(this.ApiUrl + '/ById?guidId=' + id.toString());
-  }
-
   // POST
 
   RegisterTask(request: AddTaskRequest): Observable<TaskInformation> {
@@ -43,22 +35,22 @@ export class TaskService {
   // PUT
 
   EditTask(request: EditTaskRequest): Observable<EditTaskResponse> {
-    return this.http.put<EditTaskResponse>(this.ApiUrl + '/NameandDescription', request);
+    return this.http.put<EditTaskResponse>(this.ApiUrl, request);
+  }
+
+  GetTaskById(id: string): Observable<TaskInformation> {
+    return this.http.get<TaskInformation>(this.ApiUrl + '/' + id.toString());
   }
 
   // PATCH
 
-  InactiveToActive(id: string): Observable<TaskInformation> {
-    return this.http.patch<TaskInformation>(this.ApiUrl + '/InactiveToActive?guidId=' + id.toString(), null);
+  ChangeStatusActive(id: string): Observable<TaskInformation> {
+    return this.http.patch<TaskInformation>(this.ApiUrl + '/ActiveStatus' + id.toString(), null);
   }
 
   // DELETE
 
-  SoftDeleteTask(id: string) {
-    return this.http.delete<TaskInformation>(this.ApiUrl + '/SoftDeleteOrFinish?guidId=' + id.toString());
-  }
-
-  HardDeleteTask(id: string) {
-    return this.http.delete<TaskInformation>(this.ApiUrl + '/HardDelete?guidId=' + id.toString());
+  DeleteTask(id: string) {
+    return this.http.delete<TaskInformation>(this.ApiUrl + '/' + id.toString());
   }
 }

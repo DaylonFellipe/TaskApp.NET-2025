@@ -4,10 +4,8 @@
     {
         public System.Threading.Tasks.Task SaveChangesAsync();
         public System.Threading.Tasks.Task AddAsync(Entities.Task task);
-        public System.Threading.Tasks.Task ActiveToInactiveAsync(Entities.Task task);
-        public System.Threading.Tasks.Task InactiveToActiveAsync(Entities.Task task);
+        public System.Threading.Tasks.Task ChangeActiveStatusAsync(Domain.Entities.Task task);
         public System.Threading.Tasks.Task DeleteTaskAsync(Domain.Entities.Task task);
         public System.Threading.Tasks.Task UpdateTaskAsync(Domain.Entities.Task task);
-        public System.Threading.Tasks.Task<Domain.Entities.Task> GetTaskByIdToDeleteAsync(Guid Id);
     }
 }

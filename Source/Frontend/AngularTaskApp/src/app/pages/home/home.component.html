@@ -38,11 +38,11 @@
         <td>{{ task.createdOn | date:'short' }}</td>
         <td class="active-custom">{{ task.active == true ? "🟢" : "🔴" }}</td>
         <td class="d-flex">
-          <button class="btn btn-warning mx-2" [routerLink]="['/edit', task.id]">Edit</button>
+          <button class="btn btn-warning mx-2 btn-size" [routerLink]="['/edit', task.id]">Edit</button>
 
-          <button class="btn btn-info mx-2" [routerLink]="['/details', task.id]">Details</button>
+          <button class="btn btn-info mx-2 btn-size" [routerLink]="['/details', task.id]">Details</button>
 
-          <button class="btn btn-danger mx-2" (click)="softDelete(task.id)">Finish</button>
+          <button class="btn btn-danger mx-2 btn-size" (click)="ChangeActiveStatus(task.id)">Finish</button>
         </td>
       </tr>
       } }
