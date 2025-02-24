@@ -7,6 +7,7 @@ import { AddTaskRequest } from '../models/AddTaskRequest';
 import { EditTaskResponse } from '../models/EditTaskResponse';
 import { EditTaskRequest } from '../models/EditTaskRequest';
 import { TaskStatusEnum } from './Enum/TaskStatusEnum';
+import { TaskInformationDTO } from '../models/TaskDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,14 @@ export class TaskService {
     }
   }
 
+  GetTaskDTO(): Observable<TaskInformationDTO[]> {
+    return this.http.get<TaskInformationDTO[]>(this.ApiUrl + "/DTO");
+  }
+
+  GetTaskById(id: string): Observable<TaskInformation> {
+    return this.http.get<TaskInformation>(this.ApiUrl + '/' + id.toString());
+  }
+
   // POST
 
   RegisterTask(request: AddTaskRequest): Observable<TaskInformation> {
@@ -36,10 +45,6 @@ export class TaskService {
 
   EditTask(request: EditTaskRequest): Observable<EditTaskResponse> {
     return this.http.put<EditTaskResponse>(this.ApiUrl, request);
-  }
-
-  GetTaskById(id: string): Observable<TaskInformation> {
-    return this.http.get<TaskInformation>(this.ApiUrl + '/' + id.toString());
   }
 
   // PATCH
