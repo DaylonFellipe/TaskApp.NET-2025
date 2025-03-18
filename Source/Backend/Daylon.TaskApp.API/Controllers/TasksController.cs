@@ -4,7 +4,6 @@ using Daylon.TaskApp.Application.UseCases.Task.Register;
 using Daylon.TaskApp.Application.UseCases.Task.Update;
 using Daylon.TaskApp.Communication.Requests;
 using Daylon.TaskApp.Communication.Responses;
-using Daylon.TaskApp.Domain.Repositories.Task;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Daylon.TaskApp.API.Controllers
@@ -22,9 +21,20 @@ namespace Daylon.TaskApp.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllTask(TaskStatusEnum? status, UnauthorizedResult unauthorizedResult)
+        public async Task<IActionResult> GetAllTask(TaskStatusEnum? status)
         {
             var task = await _taskService.GetTasksAsync(status);
+
+            if (task.Count == 0) return NotFound("No task found");
+
+            return Ok(task);
+        } 
+        
+        [HttpGet("DTO")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllTaskDTO()
+        {
+            var task = await _taskService.GetTasksAsyncDTO();
 
             if (task.Count == 0) return NotFound("No task found");
 

@@ -1,6 +1,8 @@
 using Daylon.TaskApp.Application;
 using Daylon.TaskApp.Infrastructure;
 
+//C:\WS\TaskApp\Source\Frontend\AngularTaskApp> ng serve
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
