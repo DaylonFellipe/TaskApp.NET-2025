@@ -21,7 +21,7 @@ namespace Daylon.TaskApp.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllTask(TaskStatusEnum? status)
+        public async Task<IActionResult> GetAllTask(TaskStatusEnum? status, CancellationToken? token)
         {
             var task = await _taskService.GetTasksAsync(status);
 
