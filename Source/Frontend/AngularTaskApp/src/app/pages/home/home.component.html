@@ -5,14 +5,14 @@
 <div class="container mt-5">
   <div class="d-flex mt-3">
   <button class="btn btn-success w-50 mx-1" [routerLink]="['/register']" routerLinkActive="router-link-active">Add new Task</button>
-  <button class="btn btn-warning w-50 mx-1" [routerLink]="['/management']" routerLinkActive="router-link-active">Management Functions</button>
+  <button class="btn btn-warning w-50 mx-1 custon-animation custon-animation2" [routerLink]="['/management']" routerLinkActive="router-link-active">Management Functions</button>
 </div>
   <div>
     <label class="custom-label form-label">Search:</label>
     <input
       type="text"
       class="form-control search-bar-custom"
-      placeholder="What task do you want to search for?  Id or Name"
+      placeholder="What task do you want to search for?  Name or Description"
       (input)="search($event)"
     />
   </div>
@@ -20,24 +20,20 @@
   <table class="table table-hover table-bordered mt-5">
     <thead class="table-dark">
       <tr>
-        <th>Id</th>
         <th>Name</th>
         <th>Description</th>
         <th>CreatedOn</th>
-        <th>Active</th>
-        <th></th>
+        <th>Actions</th>
       </tr>
     </thead>
 
     <tbody>
       @if(taskList.length > 0) { @for (task of taskList; track $index) {
       <tr>
-        <td>{{ task.id }}</td>
         <td>{{ task.name | slice:0:20 }}{{ task.name.length > 20 ? '...' : '' }}</td>
         <td>{{ task.description | slice:0:30 }}{{ task.description.length > 30 ? '...' : '' }}</td>
         <td>{{ task.createdOn | date:'short' }}</td>
-        <td class="active-custom">{{ task.active == true ? "🟢" : "🔴" }}</td>
-        <td class="d-flex">
+        <td class="d-flex justify-content-center">
           <button class="btn btn-warning mx-2 btn-size" [routerLink]="['/edit', task.id]">Edit</button>
 
           <button class="btn btn-info mx-2 btn-size" [routerLink]="['/details', task.id]">Details</button>

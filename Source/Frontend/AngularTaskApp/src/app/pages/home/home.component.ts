@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
     const value = target.value.toLowerCase();
 
     this.taskList = this.taskAll.filter(task => {
-      return task.name.toLowerCase().includes(value) || task.id.toString().includes(value);
+      return task.name.toLowerCase().includes(value) || task.description.toLowerCase().includes(value);
     })
   }
 

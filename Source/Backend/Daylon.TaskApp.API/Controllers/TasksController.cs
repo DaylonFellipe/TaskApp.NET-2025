@@ -22,7 +22,7 @@ namespace Daylon.TaskApp.API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllTask(TaskStatusEnum? status, UnauthorizedResult unauthorizedResult)
+        public async Task<IActionResult> GetAllTask(TaskStatusEnum? status)
         {
             var task = await _taskService.GetTasksAsync(status);
 
