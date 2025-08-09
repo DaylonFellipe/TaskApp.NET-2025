@@ -164,3 +164,7 @@ Inclui todas as funcionalidades das User Functions, além de:
 </div>
 <br>
 <br><br>
+
+# Thanks...
+
+//   /ᐠ - ˕ -マ D A Y L O N
