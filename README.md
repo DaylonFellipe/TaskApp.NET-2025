@@ -73,6 +73,12 @@ Includes all User Functions features, plus:
 </div>
 <br>
 
+# 📋 DBeaver
+- DBeaver makes it easy to manage, query, and edit databases in projects, speeding up development and maintenance.
+<div align="center">
+   <img src="https://github.com/user-attachments/assets/28de6b2a-5fb4-444d-b2b7-8bcf523c84bc"/>
+</div>
+<br>
 
 
 <br>
@@ -150,3 +156,11 @@ Inclui todas as funcionalidades das User Functions, além de:
 <div align="center">
    <img src="https://github.com/user-attachments/assets/52451258-cda4-4220-929f-3ee87e1f4631"/>
 </div>
+
+# 📋 DBeaver
+- DBeaver facilita gerenciar, consultar e editar bancos de dados em projetos, agilizando desenvolvimento e manutenção.
+<div align="center">
+   <img src="https://github.com/user-attachments/assets/28de6b2a-5fb4-444d-b2b7-8bcf523c84bc"/>
+</div>
+<br>
+<br><br>
