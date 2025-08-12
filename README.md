@@ -129,8 +129,6 @@ O Task App foi criado para demonstrar a integração entre uma API REST desenvol
 - Angular Material – componentes visuais e UI responsiva.
 - HTML5 / CSS3 / TypeScript – estrutura, estilo e lógica da aplicação.
 
-
-
 # ✨ Funcionalidades
 
 ## User Functions
